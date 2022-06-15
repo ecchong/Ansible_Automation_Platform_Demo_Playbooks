@@ -1,0 +1,8 @@
+---
+controller_projects:
+- name: Sample project
+  description: Project created by CaC
+  organization: Sample org
+  scm_type: git
+  scm_url: https://github.com/ecchong/Ansible_Automation_Platform_Demo_Playbooks.git  
+  credential: "Sample deploy key"

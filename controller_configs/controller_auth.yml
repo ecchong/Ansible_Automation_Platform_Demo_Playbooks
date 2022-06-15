@@ -1,0 +1,4 @@
+---
+controller_hostname: < AAP Controller hostname >
+controller_oauthtoken: < oauth token here >
+controller_validate_certs: false

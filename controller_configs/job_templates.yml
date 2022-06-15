@@ -1,0 +1,9 @@
+---
+controller_templates:
+- name: Ping 
+  description: Ping created by CaC
+  organization: Sample org
+  project: Sample project
+  playbook: "ping.yml"
+  ask_inventory_on_launch: true
+  inventory: Sample inventory
