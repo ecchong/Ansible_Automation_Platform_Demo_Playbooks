@@ -1,5 +1,0 @@
----
-#collections:
-#- name: redhat.satellite
-#- name: redhat.rhel_system_roles
-#- name: redhat_cop.controller_configuration
