@@ -1,7 +1,13 @@
 ---
 - name: Ping localhost
   hosts: all
+  gather_facts: yes
 
   tasks:
   - name: Just ping
     ping:
+
+  - name: Set a custom fact
+    set_fact:
+      cacheable: yes
+      foo: bar
