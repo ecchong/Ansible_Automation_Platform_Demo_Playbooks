@@ -7,9 +7,13 @@
   - name: Just ping
     ping:
 
+  - name: Show old facts
+    debug:
+      msg: "greeting: {{ greeting }} "
+   
   - name: Set a custom fact
     set_fact:
       cacheable: yes
       foo: bar
-      hello: "{{ greeting | default('world') }}"
+      greeting: "{{ greeting | default('world') }}"
       another: one
