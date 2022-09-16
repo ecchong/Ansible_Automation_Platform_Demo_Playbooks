@@ -9,7 +9,7 @@
 
   - name: Show old facts
     debug:
-      msg: "greeting: {{ greeting }} "
+      msg: "greeting: {{ greeting | default('greeting is undefined') }} "
    
   - name: Set a custom fact
     set_fact:
