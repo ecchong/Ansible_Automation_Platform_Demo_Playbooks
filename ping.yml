@@ -15,5 +15,5 @@
     set_fact:
       cacheable: yes
       foo: bar
-      greeting: "{{ greeting | default('world') }}"
+      greeting: "{{ new_greeting | default('') }}"
       another: one
