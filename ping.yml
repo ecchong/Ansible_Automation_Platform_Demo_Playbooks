@@ -7,7 +7,7 @@
   - name: Just ping
     ping:
 
-  - name: Show old facts
+  - name: Show current greeting
     debug:
       msg: "greeting: {{ greeting | default('greeting is undefined') }} "
    
@@ -17,3 +17,11 @@
       foo: bar
       greeting: "{{ new_greeting | default('') }}"
       another: one
+
+  - name: Show new greeting
+    debug:
+      msg: "greeting: {{ greeting }}"
+      
+  - name: Show greeting from hostvars
+    debug:
+      msg: "greeting: {{ hostvars[inventory_hostname]['greeting'] }}"
