@@ -11,4 +11,4 @@
     set_fact:
       cacheable: yes
       foo: bar
-      hello: world
+      hello: "{{ greeting | default('world') }}"
