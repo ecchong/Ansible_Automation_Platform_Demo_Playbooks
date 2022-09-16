@@ -12,3 +12,4 @@
       cacheable: yes
       foo: bar
       hello: "{{ greeting | default('world') }}"
+      another: one
