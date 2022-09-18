@@ -25,3 +25,7 @@
   - name: Show greeting from hostvars
     debug:
       msg: "greeting: {{ hostvars[inventory_hostname]['greeting'] }}"
+
+  - name: Wait
+    pause:
+      seconds: "{{ wait_time | default(0) }}"
