@@ -1,2 +1,11 @@
 - src: git+https://github.com/ecchong/ansible_role_ping.git
-  version: "{{ lookup('env','git_repo_version') }}"
+  version: dev
+  name: ansible_role_ping_dev
+
+- src: git+https://github.com/ecchong/ansible_role_ping.git
+  version: test
+  name: ansible_role_ping_test
+
+- src: git+https://github.com/ecchong/ansible_role_ping.git
+  version: prod
+  name: ansible_role_ping_prod

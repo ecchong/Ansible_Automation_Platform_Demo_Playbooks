@@ -3,6 +3,9 @@
   hosts: all
   gather_facts: yes
 
+  roles:
+  - name: ansible_role_ping_{{ git_repo_branch | default('dev') }}
+
   tasks:
   - name: Just ping
     ping:
