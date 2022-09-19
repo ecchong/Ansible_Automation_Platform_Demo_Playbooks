@@ -1,0 +1,2 @@
+- src: git+https://github.com/ecchong/ansible_role_ping.git
+  version: main
