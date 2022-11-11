@@ -1,0 +1,28 @@
+---
+- name: Get host from AAP inventory
+  hosts: localhost
+  connection: local
+  gather_facts: no
+ 
+  vars:
+    target_host_name: CHANGE_ME
+    target_host_organization: Default
+    target_host_inventory: CHANGE_ME
+    controller_host: "{{ lookup('env','CONTROLLER_HOST') }}"
+    controller_username: "{{ lookup('env','CONTROLLER_USERNAME') }}"
+    controller_password: "{{ lookup('env','CONTROLLER_PASSWORD') }}"
+
+  tasks:
+  - name: Lookup inventory ID
+    set_fact:
+      found_inventory: "{{ lookup('ansible.controller.controller_api','inventories', query_params={ 'name': target_host_inventory}, host=controller_host, username=controller_username, password=controller_password, verify_ssl=false) }}"
+
+  - debug:
+      var: found_inventory.id
+
+  - name: Query host from AAP inventory
+    set_fact:
+      found_host: "{{ lookup('ansible.controller.controller_api','hosts', query_params={ 'name': target_host_name, 'inventory': found_inventory.id }, host=controller_host, username=controller_username, password=controller_password, verify_ssl=false) }}"
+
+  - debug:
+      var: found_host.variables
