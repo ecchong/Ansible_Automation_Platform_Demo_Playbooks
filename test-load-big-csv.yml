@@ -1,0 +1,19 @@
+---
+- hosts: all
+  gather_facts: no
+
+  tasks:
+  - debug:
+      msg: hello world
+
+  - name: simulate big data
+    read_csv:
+      path: nyc_demographic_statistics_by_zip_code.csv
+    delegate_to: localhost
+    register: nyc
+
+  - name: Find zip
+    debug:
+      msg: "{{ hostvars[inventory_hostname]['nyc']['list'] | map(attribute='JURISDICTION NAME') | join(',') }}"
+#    when:
+#    - "hostvars[inventory_hostname]['nyc']['JURISDICTION NAME'] == '11364'"
