@@ -3,5 +3,6 @@
   connection: local
   gather_facts: no
   tasks:
-  - pause:
-      minutes: 245
+  - name: Pause more than 4 hours
+    pause:
+      minutes: 270

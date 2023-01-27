@@ -7,22 +7,33 @@
   vars:
     target_host_name: CHANGE_ME
     target_host_organization: Default
-    target_host_inventory: CHANGE_ME
+    target_host_inventory: "Prod Satellite"
     controller_host: "{{ lookup('env','CONTROLLER_HOST') }}"
     controller_username: "{{ lookup('env','CONTROLLER_USERNAME') }}"
     controller_password: "{{ lookup('env','CONTROLLER_PASSWORD') }}"
 
   tasks:
+  - debug:
+      var: target_host_inventory
+
   - name: Lookup inventory ID
     set_fact:
-      found_inventory: "{{ lookup('ansible.controller.controller_api','inventories', query_params={ 'name': target_host_inventory}, host=controller_host, username=controller_username, password=controller_password, verify_ssl=false) }}"
+      found_inventory: "{{ lookup('ansible.controller.controller_api','inventories', query_params=_query, host=controller_host, username=controller_username, password=controller_password, verify_ssl=false) }}"
+    vars:
+      _query:
+        name: "{{ target_host_inventory }}"
 
   - debug:
       var: found_inventory.id
 
   - name: Query host from AAP inventory
     set_fact:
-      found_host: "{{ lookup('ansible.controller.controller_api','hosts', query_params={ 'name': target_host_name, 'inventory': found_inventory.id }, host=controller_host, username=controller_username, password=controller_password, verify_ssl=false) }}"
+      found_host: "{{ lookup('ansible.controller.controller_api','hosts', query_params=_query, host=controller_host, username=controller_username, password=controller_password, verify_ssl=false) }}"
+    vars:
+      _query:
+        name: "{{ target_host_name }}"
+        inventory: "{{ found_inventory.id }}"
+    when: found_inventory.id is defined
 
   - debug:
       var: found_host.variables
