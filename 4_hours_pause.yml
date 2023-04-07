@@ -1,8 +1,0 @@
----
-- hosts: localhost
-  connection: local
-  gather_facts: no
-  tasks:
-  - name: Pause more than 4 hours
-    pause:
-      minutes: 270

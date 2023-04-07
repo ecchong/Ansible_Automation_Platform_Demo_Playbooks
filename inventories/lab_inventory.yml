@@ -1,0 +1,16 @@
+all:
+  children:
+    aap_infra:
+      vars:
+        my_var: this is a group var
+      hosts:
+        node70.lab.automate.nyc:
+          foo: bar
+        node71.lab.automate.nyc:
+        node72.lab.automate.nyc:
+        node73.lab.automate.nyc:
+        node74.lab.automate.nyc:
+        node75.lab.automate.nyc:
+        node76.lab.automate.nyc:
+        node77.lab.automate.nyc:
+        node78.lab.automate.nyc:
