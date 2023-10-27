@@ -1,0 +1,6 @@
+---
+- name: Say hello from collection
+  hosts: all
+  gather_facts: false
+  roles:
+  - role: automate_nyc.test.hello
