@@ -1,5 +1,4 @@
 ---
 collections:
 - name: community.general
-- name: automate_nyc.test2
 - name: servicenow.itsm
