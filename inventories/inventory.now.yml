@@ -10,7 +10,7 @@ columns:
   - serial_number
   - ip_address
   - asset.install_status
-  - support_grooup.name
+  - support_group.name
   - location.name
 
 compose:
