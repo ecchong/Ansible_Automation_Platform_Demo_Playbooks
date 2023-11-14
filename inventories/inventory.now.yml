@@ -20,7 +20,8 @@ compose:
 sysparm_query: asset.install_status=1^u_server_classification=General Purpose Server^u_environmentINsit0,BAT,DEV,SIT
 
 keyed_groups:
-  - key: os | regex_replace('\W|\/','_')
+#  - key: os | regex_replace('\W|\/','_')
+  - key: os
     prefix: CMDB_Keyed_Group_os
     parent_group: CMDB_Keyed_Group_os_ALL
     default_value: empty_cmdb_value
