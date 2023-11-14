@@ -20,44 +20,19 @@ compose:
 sysparm_query: asset.install_status=1^u_server_classification=General Purpose Server^u_environmentINsit0,BAT,DEV,SIT
 
 keyed_groups:
-  - key: u_os_environment
-    prefix: CMDB_Keyed_Group_u_os_environment
-    parent_group: CMDB_Keyed_Group_u_os_environment_ALL
-    default_value: empty_cmdb_value
-
-  - key: u_chassis_sub_type
-    prefix: CMDB_Keyed_Group_u_chassis_sub_type
-    parent_group: CMDB_Keyed_Group_u_chassis_sub_type_ALL
-    default_value: empty_cmdb_value
-
-  - key: u_server_classification
-    prefix: CMDB_Keyed_Group_u_server_classification
-    parent_group: CMDB_Keyed_Group_u_server_classification_ALL
-    default_value: empty_cmdb_value
-
-  - key: u_virtual_server_technology
-    prefix: CMDB_Keyed_Group_u_virtual_server_technology
-    parent_group: CMDB_Keyed_Group_u_virtual_server_technology_ALL
-    default_value: empty_cmdb_value
-
-  - key: u_os_family
-    prefix: CMDB_Keyed_Group_u_os_family
-    parent_group: CMDB_Keyed_Group_u_os_family_ALL
-    default_value: empty_cmdb_value
-
-  - key: os
+  - key: os | regex_replace('\W|\/','_')
     prefix: CMDB_Keyed_Group_os
     parent_group: CMDB_Keyed_Group_os_ALL
     default_value: empty_cmdb_value
 
   - key: lookup('ansible.builtin.vars', 'asset.install_status')
-    prefix: CMDB_Keyed_Group_asset.install_status
-    parent_group: CMDB_Keyed_Group_asset.install_status_ALL
+    prefix: CMDB_Keyed_Group_{{ asset.install_status }}
+    parent_group: CMDB_Keyed_Group_{{ asset.install_status }}_ALL
     default_value: empty_cmdb_value
 
   - key: lookup('ansible.builtin.vars', 'location.name')
-    prefix: CMDB_Keyed_Group_location.name
-    parent_group: CMDB_Keyed_Group_location.name_ALL
+    prefix: CMDB_Keyed_Group_{{ location.name }}
+    parent_group: CMDB_Keyed_Group_{{ location.name }}_ALL
     default_value: empty_cmdb_value
 
 groups:
