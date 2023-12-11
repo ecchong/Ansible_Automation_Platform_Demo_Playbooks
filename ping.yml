@@ -27,7 +27,7 @@
       
   - name: Show greeting from hostvars
     debug:
-      msg: "New Greeting #7: {{ hostvars[inventory_hostname]['greeting'] }}"
+      msg: "New Greeting #8: {{ hostvars[inventory_hostname]['greeting'] }}"
 
   - name: Wait
     pause:
