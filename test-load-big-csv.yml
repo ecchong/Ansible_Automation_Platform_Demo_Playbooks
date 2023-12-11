@@ -18,3 +18,7 @@
       msg: "{{ hostvars[inventory_hostname]['nyc']['list'] | map(attribute='JURISDICTION NAME') | join(',') }}"
 #    when:
 #    - "hostvars[inventory_hostname]['nyc']['JURISDICTION NAME'] == '11364'"
+
+  - name: Wait
+    pause:
+      minutes: "{{ wait_time | default(2) }}"
