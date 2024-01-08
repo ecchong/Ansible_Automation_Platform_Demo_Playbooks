@@ -8,18 +8,33 @@
     cmd: "tar -zcvf {{ rpmdbfix_dbbackupdir }}/{{ rpmdbfix_dbbackupfile }} rpm"
     chdir: /var/lib
 
-- name: Remove rpm db and cache files
+- name: Select cache files to be removed
+  ansible.builtin.find:
+    paths:
+      - /var/cache/yum/
+      - /var/cache/dnf/
+    patterns: '*'
+    recurse: true
+  register: _cache_files
+
+- name: Select cache files to be removed
+  ansible.builtin.find:
+    paths:
+      - /var/lib/rpm/
+    patterns: '__db\.[0-9][0-9]*'
+    use_regex: true
+    recurse: true
+  register: _db_files
+
+- name: Remove cache files
   ansible.builtin.file:
     path: "{{ item }}"
     state: absent
-  loop:
-    - "{{ lookup('ansible.builtin.fileglob','/var/lib/rpm/__db.[0-9][0-9]*') }}"
-    - "{{ lookup('ansible.builtin.fileglob','/var/cache/yum/*') }}"
-    - "{{ lookup('ansible.builtin.fileglob','/var/cache/dnf/*') }}"
-
+  loop: "{{ _cache_files.files | map(attribute='path') +  _db_files.files | map(attribute='path') }}"
 
 - name: Rebuild yum db
   ansible.builtin.shell: rpm -qa; rpm --rebuilddb ; yum clean all
+  changed_when: true
   register: _yum_rebuild
   ignore_errors: true
 
