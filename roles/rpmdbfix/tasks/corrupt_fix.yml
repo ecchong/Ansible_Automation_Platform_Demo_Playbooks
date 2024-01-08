@@ -1,0 +1,55 @@
+---
+- name: Ensure no running rpm/yum commands
+  ansible.builtin.include_tasks:
+    file: proc_fix.yml
+
+- name: Create rpm db backup
+  ansible.builtin.command: 
+    cmd: "tar -zcvf {{ rpmdbfix_dbbackupdir }}/{{ rpmdbfix_dbbackupfile }} rpm"
+    chdir: /var/lib
+
+- name: Remove rpm db and cache files
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "{{ lookup('ansible.builtin.fileglob','/var/lib/rpm/__db.[0-9][0-9]*') }}"
+    - "{{ lookup('ansible.builtin.fileglob','/var/cache/yum/*') }}"
+    - "{{ lookup('ansible.builtin.fileglob','/var/cache/dnf/*') }}"
+
+
+- name: Rebuild yum db
+  ansible.builtin.shell: rpm -qa; rpm --rebuilddb ; yum clean all
+  register: _yum_rebuild
+  ignore_errors: true
+
+- name: Packages missing or damaged. Manual intervention required
+  when: "'cannot open Packages' in _yum_rebuild.stdout or 'cannot open Packages' in _yum_rebuild.stderr"
+  ansible.builtin.include_tasks:
+    file: log_and_fail.yml
+  vars:
+    _severity: err
+    _msg: "Packages missing or damaged. Manual intervention required"
+
+- name: Pause before checking yum again
+  ansible.builtin.pause:
+    seconds: "{{ rpmdbfix_sleep_after_fix }}"
+
+- name: Check yum repolist output
+#  ansible.builtin.command: "timeout --signal=9 {{ rpmdbfix_timeout_yum }} yum repolist"
+  ansible.builtin.command: "yum repolist"
+  async: "{{ rpmdbfix_timeout_yum }}"
+  ignore_errors: true
+  changed_when: false
+  register: _repolist
+  
+- name: Force failure if unable recovery failed
+  when:
+    - "'DB_RUNRECOVERY' in _repolist.stdout or 'DB_RUNRECOVERY' in _repolist.stderr"
+    - "'rpmdb' in _repolist.stdout or 'rpmdb' in _repolist.stderr"
+  ansible.builtin.include_tasks:
+    file: log_and_fail.yml
+  vars:
+    _severity: err
+    _msg: "RPM db fix failed to apply"
+

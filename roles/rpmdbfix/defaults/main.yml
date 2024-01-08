@@ -1,0 +1,6 @@
+---
+rpmdbfix_dbbackupdir: "/var/preserve"
+rpmdbfix_dbbackupfile: "rpmdbfix-{{ ansible_date_time.iso8601 }}.tgz"
+rpmdbfix_sleep_rpm_wait: 600
+rpmdbfix_sleep_after_fix: 10
+rpmdbfix_timeout_yum: 15

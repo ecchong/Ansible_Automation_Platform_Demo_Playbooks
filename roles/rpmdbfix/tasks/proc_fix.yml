@@ -1,0 +1,47 @@
+---
+- name: List running rpm/yum/dnf/up2date processes and wait for them to stop
+  ansible.builtin.command: pgrep "^rpm$|^yum$|^dnf$|^up2date$"
+  register: _running_processes
+  ignore_errors: true
+  changed_when: false
+  failed_when: false
+  until: _running_processes.stdout_lines | length == 0
+  retries: 5
+  delay: "{{ rpmdbfix_sleep_rpm_wait | int // 5 }}"
+
+- name: Killing running processes
+  when: _running_processes.stdout_lines | length > 0
+  block:
+    - name: Log a syslog message before killing processes
+      ansible.builtin.syslogger:
+        priority: warning
+        ident: "{{ ansible_role_name }}"
+        msg: "Trying to terminate active rpm/yum/dnf/up2date processes."
+
+    - name: Send kill signal to processes until they no longer exists
+      ansible.builtin.command: "kill -9 {{ _running_processes.stdout_lines | join(' ') }}"
+      register: _kill_processes
+      ignore_errors: true
+      until: _kill_processes.rc != 0
+      retries: 3
+      delay: "{{ rpmdbfix_sleep_after_fix }}"
+
+    - name: Check processes again and force failure if processes still running
+      ansible.builtin.command: pgrep "^rpm$|^yum$|^dnf$|^up2date$"
+      register: _last_check
+      ignore_errors: true
+      failed_when: _last_check.rc == 0
+      changed_when: false
+
+    - name: Force failure if unable to kill processes
+      when: _last_check.rc == 0
+      block:
+        - name: Log a syslog message before terminating
+          ansible.builtin.syslogger:
+            priority: err
+            ident: "{{ ansible_role_name }}"
+            msg: "Kill failure.  Could not terminate rpm/yum/dnf/up2date commands"
+
+        - name: Stop playbook
+          ansible.builtin.fail:
+            msg: "Kill failure.  Could not terminate rpm/yum/dnf/up2date commands"

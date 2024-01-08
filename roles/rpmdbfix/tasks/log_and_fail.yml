@@ -1,0 +1,10 @@
+---
+- name: Log a syslog message - {{ _msg }}
+  ansible.builtin.syslogger:
+    priority: "{{ _severity }}"
+    ident: "{{ ansible_role_name }}"
+    msg: "{{ _msg }}"
+
+- name: Force failure - {{ _msg }}
+  ansible.builtin.fail:
+    msg: "{{ _msg }}"

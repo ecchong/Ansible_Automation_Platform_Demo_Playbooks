@@ -1,0 +1,6 @@
+---
+- name: Proceed for RedHat and CentOS system
+  ansible.builtin.assert:
+    that:
+      - ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+    fail_msg: "Not a RHEL based server"

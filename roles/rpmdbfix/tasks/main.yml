@@ -1,0 +1,55 @@
+- name: Sanity Check
+  ansible.builtin.include_tasks:
+    file: sanity_check.yml
+
+- name: Check yum repolist output
+#  ansible.builtin.command: "timeout --signal=9 {{ rpmdbfix_timeout_yum }} yum repolist"
+  ansible.builtin.command: "yum repolist"
+  async: "{{ rpmdbfix_timeout_yum }}"
+  ignore_errors: true
+  changed_when: false
+  register: _repolist
+
+- name: Yum timeout exceeded
+  when: _repolist.rc is not defined or _repolist.rc != 0
+  ansible.builtin.include_tasks:
+    file: log_and_fail.yml
+  vars:
+    _severity: err
+    _msg: "Yum timeout exceeded ({{ rpmdbfix_timeout_yum }} seconds exceeded)"
+
+- name: Yum HTTPS error
+  when: "'HTTPS Error 404' in _repolist.stdout"
+  ansible.builtin.include_tasks:
+    file: log_and_fail.yml
+  vars:
+    _severity: err
+    _msg: "HTTPS error (Suspect satellite state issue)"
+
+- name: Yum Error 12 Timeout
+  when: "'[Errno 12] Timeout' in _repolist.stdout"
+  ansible.builtin.include_tasks:
+    file: log_and_fail.yml
+  vars:
+    _severity: err
+    _msg: "Timeout error (suspect firewall or env issue)"
+
+- name: Yum unknonw error
+  when: "'error' in _repolist.stdout"
+  ansible.builtin.include_tasks:
+    file: log_and_fail.yml
+  vars:
+    _severity: err
+    _msg: "Unknown yum test error"
+
+- name: Corrupted RPM Db
+  when: "'DB_RUNRECOVERY' in _repolist.stdout or 'rpmdb' in _repolist.stdout"
+  ansible.builtin.include_tasks:
+    file: corrupt_fix.yml
+
+- name: RPM DB fix not required
+  ansible.builtin.debug:
+    msg: "RPM DB fix not required"
+  
+- ansible.builtin.include_tasks:
+    file: corrupt_fix.yml
