@@ -4,7 +4,7 @@
 
 - name: Check yum repolist output
 #  ansible.builtin.command: "timeout --signal=9 {{ rpmdbfix_timeout_yum }} yum repolist"
-  ansible.builtin.command: "yum repolist"
+  ansible.builtin.command: "{{ rpmdbfix_yum_command }} repolist"
   async: "{{ rpmdbfix_timeout_yum }}"
   ignore_errors: true
   changed_when: false
@@ -51,5 +51,6 @@
   ansible.builtin.debug:
     msg: "RPM DB fix not required"
   
-- ansible.builtin.include_tasks:
-    file: corrupt_fix.yml
+# DEBUG force fix
+#- ansible.builtin.include_tasks:
+#    file: corrupt_fix.yml

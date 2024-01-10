@@ -15,9 +15,10 @@
       - /var/cache/dnf/
     patterns: '*'
     recurse: true
+    file_type: any
   register: _cache_files
 
-- name: Select cache files to be removed
+- name: Select rpm db files to be removed
   ansible.builtin.find:
     paths:
       - /var/lib/rpm/
@@ -30,10 +31,10 @@
   ansible.builtin.file:
     path: "{{ item }}"
     state: absent
-  loop: "{{ _cache_files.files | map(attribute='path') +  _db_files.files | map(attribute='path') }}"
+  loop: "{{ _cache_files.files | map(attribute='path') + _db_files.files | map(attribute='path') }}"
 
 - name: Rebuild yum db
-  ansible.builtin.shell: rpm -qa; rpm --rebuilddb ; yum clean all
+  ansible.builtin.shell: "rpm -qa; rpm --rebuilddb ; {{ rpmdbfix_yum_command }} clean all"
   changed_when: true
   register: _yum_rebuild
   ignore_errors: true
@@ -52,7 +53,7 @@
 
 - name: Check yum repolist output
 #  ansible.builtin.command: "timeout --signal=9 {{ rpmdbfix_timeout_yum }} yum repolist"
-  ansible.builtin.command: "yum repolist"
+  ansible.builtin.command: "{{ rpmdbfix_yum_command }} repolist"
   async: "{{ rpmdbfix_timeout_yum }}"
   ignore_errors: true
   changed_when: false

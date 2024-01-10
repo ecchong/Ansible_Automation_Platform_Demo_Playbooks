@@ -4,3 +4,19 @@
     that:
       - ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
     fail_msg: "Not a RHEL based server"
+    success_msg: "Supported OS"
+
+
+# print available KB and capacity %
+- name: Get backup directory free space
+  ansible.builtin.shell: "df -Pk {{ rpmdbfix_dbbackupdir }} | awk 'END{print $4\"\\n\"$5}'"
+  register: _disk_space
+  changed_when: false
+
+- name: Fail if not enough disk space
+  ansible.builtin.assert:
+    that:
+      - _disk_space.stdout_lines[0] | int > {{ rpmdbfix_minimumkfree }}
+      - _disk_space.stdout_lines[1] | regex_replace('%','') | int < {{ rpmdbfix_maxpercentdisk }}
+    fail_msg: "Not enough disk space on {{ rpmdbfix_dbbackupdir }}: KB free {{ _disk_space.stdout_lines[0] }}, Capacity {{ _disk_space.stdout_lines[1] }}"
+    success_msg: "Enough disk space for backup"
