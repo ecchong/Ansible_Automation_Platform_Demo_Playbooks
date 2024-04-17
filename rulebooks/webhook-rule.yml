@@ -1,0 +1,23 @@
+---
+- name: Listen for events on kafka
+  hosts: all
+ 
+  sources:
+#    - ansible.eda.kafka:
+#        host: kafka-0.kafka-headless.kafka.svc.cluster.local
+#        port: 9092
+#        topic: kafka-test-topic
+#        group_id: ansible-eda
+    - ansible.eda.webhook:
+        host: 0.0.0.0
+        port: 8080
+ 
+  rules:
+    - name: test webhook
+      condition:
+        all:
+          - event.payload.message != ""
+      action:
+        run_job_template:
+          name: "Ping"
+          organization: Default
