@@ -17,3 +17,5 @@
         run_job_template:
           name: "Ping"
           organization: ABC
+          job_args:
+            event_payload: "{{ event.payload }}"
