@@ -1,0 +1,11 @@
+---
+plugin: servicenow.itsm.now
+table: cmdb_ci_server
+strict: false
+
+instance:
+  timeout: 1200
+
+sysparm_query: nameSTARTSWITHnode
+sysparm_limit: 5
+... 
