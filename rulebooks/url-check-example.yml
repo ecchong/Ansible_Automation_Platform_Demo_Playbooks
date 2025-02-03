@@ -16,7 +16,9 @@
         run_job_template:
           organization: ABC
           name: eda-demo
-          job_args: "{{ event }}"
+          job_args:
+            extra_vars:
+              event: "{{ event }}"
 
     - name: Web site is down
       condition: event.url_check.status == "down"
@@ -24,4 +26,6 @@
         run_job_template:
           organization: ABC
           name: eda-demo
-          job_args: "{{ event }}"
+          job_args:
+            extra_vars:
+              event: "{{ event }}"
