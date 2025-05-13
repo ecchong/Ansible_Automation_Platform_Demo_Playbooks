@@ -4,3 +4,5 @@
   gather_facts: false
   tasks:
     - ping:
+    - debug:
+        var: dummy
