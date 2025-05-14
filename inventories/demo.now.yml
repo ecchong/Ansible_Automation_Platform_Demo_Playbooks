@@ -41,6 +41,11 @@ keyed_groups:
     parent_group: CMDB_Keyed_Group_{{ location.name }}_ALL
     default_value: empty_cmdb_value
 
+  - key: os | regex_replace('[^a-zA-Z0-9]','_')
+    prefix: CMDB_Keyed_Group_os
+    parent_group: CMDB_Keyed_Group_os_ALL
+    default_value: empty_cmdb_value
+
 groups:
   CMDB_Group_OS_ALL_RHEL: >- 
     "red hat" in os | lower
