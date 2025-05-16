@@ -2,3 +2,4 @@
 collections:
 - name: community.general
 - name: servicenow.itsm
+  version: "2.9.0"
