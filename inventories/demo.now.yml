@@ -25,12 +25,6 @@ compose:
   composed_short_name: name.split('.')[0].split('_RETIRED')[0].split('_retired')[0].split('_Retired')[0]|lower
 
 keyed_groups:
-#  - key: os | regex_replace('\W|\/','_')
-  - key: os
-    prefix: CMDB_Keyed_Group_os
-    parent_group: CMDB_Keyed_Group_os_ALL
-    default_value: empty_cmdb_value
-
   - key: lookup('ansible.builtin.vars', 'asset.install_status')
     prefix: CMDB_Keyed_Group_{{ asset.install_status }}
     parent_group: CMDB_Keyed_Group_{{ asset.install_status }}_ALL
