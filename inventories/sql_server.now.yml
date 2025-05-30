@@ -1,7 +1,7 @@
 ---
 # Find SQL servers from a custom database view
 #
-plugin: xservicenow.itsm.now
+plugin: servicenow.itsm.now
 table: u_server_software
 strict: false
 inventory_hostname_source: server_name
@@ -14,4 +14,4 @@ columns:
   - sw_display_name
   - xyz
 
-sysparm_query: sw_display_nameLIKESQL Server
+#sysparm_query: sw_display_nameLIKESQL Server
