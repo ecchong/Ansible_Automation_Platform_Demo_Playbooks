@@ -1,13 +1,3 @@
 ---
 plugin: servicenow.itsm.now
 table: cmdb_ci_server
-strict: false
-columns:
-  - sys_id
-  - name
-  - fqdn
-  - os
-#  - u_dummy
-  - asset
-#  - u_server_classification
-#  - u_environment
