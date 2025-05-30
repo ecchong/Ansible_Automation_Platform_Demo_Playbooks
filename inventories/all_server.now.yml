@@ -1,0 +1,21 @@
+---
+plugin: servicenow.itsm.now
+table: cmdb_ci_server
+strict: false
+columns:
+  - sys_id
+  - name
+  - fqdn
+  - os
+#  - u_dummy
+  - asset
+#  - u_server_classification
+#  - u_environment
+compose:
+  ansible_host: fqdn
+  composed_short_name: name.split('.')[0].split('_RETIRED')[0].split('_retired')[0].split('_Retired')[0]|lower
+  my_dummy: u_dummy
+
+#sysparm_query: asset.install_status=1^u_server_classification=General Purpose Server^u_environmentINsit0,BAT,DEV,SIT
+#query:
+#  - name: = lnux100
