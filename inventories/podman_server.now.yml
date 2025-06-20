@@ -29,3 +29,9 @@ compose:
   podman_installed_on_install_status: lookup('ansible.builtin.vars', 'installed_on.install_status', allow_unsafe=True) | first
   podman_installed_on_operational_status: lookup('ansible.builtin.vars', 'installed_on.operational_status', allow_unsafe=True) | first
   podman_installed_on_life_cycle_stage: lookup('ansible.builtin.vars', 'installed_on.life_cycle_stage', allow_unsafe=True) | first
+
+keyed_groups:
+  - key: display_name
+    prefix: CMDB_Keyed_Group_podman
+    parent_group: CMDB_Keyed_Group_Software_All
+    default_value: empty_cmdb_value
