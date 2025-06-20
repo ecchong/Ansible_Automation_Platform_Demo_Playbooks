@@ -5,27 +5,27 @@ plugin: servicenow.itsm.now
 table: cmdb_sam_sw_install
 strict: true
 inventory_hostname_source: installed_on.name
-#columns:
-#  - display_name
-#  - installed_on.name
-#  - installed_on.os
-#  - installed_on.ip_address
-#  - installed_on.environment
-#  - installed_on.location
-#  - installed_on.install_status
-#  - installed_on.operational_status
-#  - installed_on.life_cycle_stage
+columns:
+  - display_name
+  - installed_on.name
+  - installed_on.os
+  - installed_on.ip_address
+  - installed_on.environment
+  - installed_on.location
+  - installed_on.install_status
+  - installed_on.operational_status
+  - installed_on.life_cycle_stage
 
 sysparm_query: installed_onISNOTEMPTY^display_nameLIKEpodman
 
 compose:
-  - podman_display_name: display_name
-  - podman_version: version
-  - podman_installed_on_name: installed_on.name
-  - podman_installed_on_os: installed_on.os
-  - podman_installed_on_ip_address: installed_on.ip_address
-  - podman_installed_on_environment: installed_on.environment
-  - podman_installed_on_location: installed_on.location
-  - podman_installed_on_install_status: installed_on.install_status
-  - podman_installed_on_operational_status: installed_on.operational_status
-  - podman_installed_on_life_cycle_stage: installed_on.life_cycle_stage
+  podman_display_name: display_name
+  podman_version: version
+  podman_installed_on_name: lookup('ansible.builtin.vars', 'installed_on.name', allow_unsafe=True) | first
+  podman_installed_on_os: lookup('ansible.builtin.vars', 'installed_on.os', allow_unsafe=True) | first
+  podman_installed_on_ip_address: lookup('ansible.builtin.vars', 'installed_on.ip_address', allow_unsafe=True) | first
+  podman_installed_on_environment: lookup('ansible.builtin.vars', 'installed_on.environment', allow_unsafe=True) | first
+  podman_installed_on_location: lookup('ansible.builtin.vars', 'installed_on.location', allow_unsafe=True) | first
+  podman_installed_on_install_status: lookup('ansible.builtin.vars', 'installed_on.install_status', allow_unsafe=True) | first
+  podman_installed_on_operational_status: lookup('ansible.builtin.vars', 'installed_on.operational_status', allow_unsafe=True) | first
+  podman_installed_on_life_cycle_stage: lookup('ansible.builtin.vars', 'installed_on.life_cycle_stage', allow_unsafe=True) | first
