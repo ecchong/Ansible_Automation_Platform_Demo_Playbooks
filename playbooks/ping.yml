@@ -1,18 +1,12 @@
 ---
 - name: Just ping
   hosts: all
-  gather_facts: false
+  gather_facts: "{{ target_gather_facts | default(false) }}"
 
   tasks:
-    - name: Task 1
+    - name: Task 1 - Show a fact variable if exist
       debug:
-        var: foo
+        var: ansible_distribution_major_version
 
     - name: Task 2
-      ping:
-
-    - name: Task 3
-      setup:
-
-    - name: Task 4
       ping:
