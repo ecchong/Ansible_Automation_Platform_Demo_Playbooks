@@ -21,7 +21,7 @@ columns:
   - location.name
 
 compose:
-  ansible_host: fqdn
+  ansible_host: ip_address
   composed_short_name: name.split('.')[0].split('_RETIRED')[0].split('_retired')[0].split('_Retired')[0]|lower
 
 keyed_groups:
