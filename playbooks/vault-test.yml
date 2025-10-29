@@ -1,0 +1,16 @@
+---
+- name: Testing accessing Hashicorp Vault
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Lookup a secret
+      debug:
+        msg: "{{ lookup('hashicorp.vault.kv2_secret_get', auth_method='cert', engine_mount_point='terraform_alpine_swarm', secret='aap') }}"
+      ignore_errors: true
+
+    - name: Lookup a secret with community.hashicorp_vault using cert
+      debug:
+        msg: "{{ lookup('community.hashi_vault.vault_kv2_get', 'aap', engine_mount_point='terraform_alpine_swarm', auth_method='cert' ) }}"
+      ignore_errors: true
