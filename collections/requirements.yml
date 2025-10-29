@@ -3,3 +3,6 @@ collections:
 - name: community.general
 - name: servicenow.itsm
   version: "2.9.3"
+- name: community.hashi_vault
+  version: "6.2.1"       
+- name: hashicorp.vault
