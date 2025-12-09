@@ -3,6 +3,16 @@
   hosts: all
   gather_facts: yes
 
+  vars:
+    _target_env: |-
+      {%- if survey_target_env is defined -%}
+        {{ survey_target_env }}
+      {%- elif aap_environment == 'dev' -%}
+        {{ 'dev' }}
+      {%- else -%}
+        {{ aap_environment }}
+      {%- endif -%}
+
   roles:
   - name: ansible_role_ping_{{ git_repo_branch | default('dev') }}
 
@@ -35,4 +45,4 @@
 
   - name: DEBUG DEUBG
     debug:
-      var: greeting
+      var: _target_env
