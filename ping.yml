@@ -32,3 +32,7 @@
   - name: Wait
     pause:
       seconds: "{{ wait_time | default(0) }}"
+
+  - name: DEBUG DEUBG
+    debug:
+      var: greeting
