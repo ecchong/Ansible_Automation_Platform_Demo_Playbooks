@@ -6,7 +6,7 @@ instance:
   timeout: 1200
 use_vars_plugins: true
 
-sysparm_query: nameSTARTSWITHnode09
+sysparm_query: nameSTARTSWITHnode^ORnameSTARTSWITHaap
 #sysparm_limit: 5
 
 columns:
