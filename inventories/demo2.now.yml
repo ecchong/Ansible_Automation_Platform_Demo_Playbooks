@@ -17,6 +17,7 @@ columns:
   - serial_number
   - ip_address
   - asset.install_status
+  - install_status
   - support_group.name
   - location.name
 
