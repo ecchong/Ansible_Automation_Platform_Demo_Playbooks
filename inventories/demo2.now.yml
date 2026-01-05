@@ -6,7 +6,7 @@ instance:
   timeout: 1200
 use_vars_plugins: true
 
-sysparm_query: nameSTARTSWITHnode^asset.install_status=1
+sysparm_query: nameLIKEnode^install_status=1
 #sysparm_limit: 5
 
 columns:
