@@ -9,21 +9,8 @@
 
   rules:
     - name: New incident
-      condition: event.incident_state == '1'
-      actions:
-        - print_event:
-            pretty: true
-#        - run_playbook:
-#            name: playbooks/servicenow-update-incident.yml
-
-    - name: Incident in prgress
-      condition: event.incident_state == '2'
-      actions:
-        - print_event:
-            pretty: true
-
-    - name: Catch all
       condition: event.sys_id is defined
       actions:
         - print_event:
             pretty: true
+
