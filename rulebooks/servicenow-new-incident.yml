@@ -1,0 +1,30 @@
+---
+---
+- name: Generic new poll for new records in ServiceNow
+  hosts: all
+  sources:
+    - name: Watch for any updated table
+      servicenow.itsm.records:
+        table: incident
+        interval: 5
+
+  rules:
+    - name: New incident
+      condition: event.incident_state == '1'
+      actions:
+        - print_event:
+            pretty: true
+#        - run_playbook:
+#            name: playbooks/servicenow-update-incident.yml
+
+    - name: Incident in prgress
+      condition: event.incident_state == '2'
+      actions:
+        - print_event:
+            pretty: true
+
+    - name: Catch all
+      condition: event.sys_id is defined
+      actions:
+        - print_event:
+            pretty: true
