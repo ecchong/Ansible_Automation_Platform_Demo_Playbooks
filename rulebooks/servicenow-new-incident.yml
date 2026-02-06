@@ -6,6 +6,8 @@
       servicenow.itsm.records:
         table: incident
         interval: 5
+        instance:
+          host: https://dev225014.service-now.com/
 
   rules:
     - name: New incident
