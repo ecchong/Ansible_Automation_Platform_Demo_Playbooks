@@ -1,5 +1,4 @@
 ---
----
 - name: Generic new poll for new records in ServiceNow
   hosts: all
   sources:
