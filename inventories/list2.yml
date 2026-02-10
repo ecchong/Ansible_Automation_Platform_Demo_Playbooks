@@ -5,4 +5,3 @@ all:
     test-node02:
     test-node03:
     test-node04:
-    hello:
