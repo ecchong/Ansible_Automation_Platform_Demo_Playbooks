@@ -3,4 +3,3 @@ all:
   hosts:
     test-node01:
     test-node02:
-    foobar:
