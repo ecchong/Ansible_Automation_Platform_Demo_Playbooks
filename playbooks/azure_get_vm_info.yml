@@ -6,7 +6,7 @@
   tasks:
     - name: Get all VMs info
       azure.azcollection.azure_rm_virtualmachine_info:
-        auth_source: auto
+        auth_source: "{{ auth_source | default('auto') }}"
         resource_group: "{{ resource_group | default(omit) }}"
         name: "{{ vm_name | default(omit) }}"
 
