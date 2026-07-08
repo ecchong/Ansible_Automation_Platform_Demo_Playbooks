@@ -1,0 +1,9 @@
+---
+sources:
+  - ansible.eda.kafka:
+      host: ryzen5.lab.automate.nyc:9094
+      topic: syslog
+
+rules:
+  - name: Trigger on hello
+    
