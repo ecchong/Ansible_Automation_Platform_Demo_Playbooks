@@ -6,4 +6,6 @@ sources:
 
 rules:
   - name: Trigger on hello
-    
+    condition: event.message.message == "hello"
+    action:
+         
