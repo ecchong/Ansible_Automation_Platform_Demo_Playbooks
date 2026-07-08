@@ -1,11 +1,17 @@
 ---
-sources:
-  - ansible.eda.kafka:
-      host: ryzen5.lab.automate.nyc:9094
-      topic: syslog
+- name: Testing Kafka
+  hosts: localhost
 
-rules:
-  - name: Trigger on hello
-    condition: event.message.message == "hello"
-    action:
-         
+  sources:
+    - name: Kafka
+      ansible.eda.kafka:
+        host: ryzen5.lab.automate.nyc
+        port: 9094
+        topic: syslog-queue
+
+  rules:
+    - name: Trigger on hello
+      condition: event.body.message == 'hello'
+      actions:
+        - print_event:
+            pretty: true
