@@ -12,6 +12,11 @@
   rules:
     - name: Trigger on hello
       condition: event.body.message == 'hello'
+      throttle:
+        once_within: 5 minutes
+        group_by_attributes:
+          - event.body.message
+          - event.body.appname
       actions:
         - print_event:
             pretty: true
