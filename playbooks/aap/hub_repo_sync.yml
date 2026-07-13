@@ -1,0 +1,25 @@
+---
+- name: Trigger Automation Hub repositories sync
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    ah_collection_repositories:
+      - name: validated
+        wait: false
+      - name: rh-certified
+        wait: false
+
+  tasks:
+    - name: Gather credential
+      ansible.builtin.set_fact:
+        ah_host: "{{ lookup('ansible.builtin.env', 'AAP_HOSTNAME') | default(aap_hostname, true) }}"
+        ah_username: "{{ lookup('env', 'AAP_USERNAME') | default(aap_username, true) }}"
+        ah_validate_certs: "{{ lookup('env', 'AAP_VALIDATE_CERTS') | default(aap_validate_certs, true) | default(true) }}"
+        ah_password: "{{ lookup('env', 'AAP_PASSWORD') | default(aap_password, true) }}"
+      no_log: true
+
+    - name: Start repository sync
+      ansible.builtin.include_role:
+        name: infra.ah_configuration.collection_repository_sync
