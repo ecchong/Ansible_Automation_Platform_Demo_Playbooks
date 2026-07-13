@@ -4,3 +4,4 @@ collections:
   - name: servicenow.itsm
   - name: azure.azcollection
   - name: infra.aap_configuration
+  - name: infra.ah_configuration
