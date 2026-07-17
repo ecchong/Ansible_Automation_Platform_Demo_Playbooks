@@ -6,9 +6,6 @@
       servicenow.itsm.records:
         table: incident
         interval: 5
-        instance:
-          host: "{{ SN_HOST }}"
-          api_key: "{{ SN_API_KEY }}"
 
   rules:
     - name: New incident
