@@ -1,0 +1,18 @@
+---
+- name: Direct query ServiceNow incident table
+  hosts: all
+  sources:
+    - name: Watch for any updated table
+      servicenow.itsm.records:
+        table: incident
+        interval: 5
+        instance:
+          api_key: "{{ SN_API_KEY }}"
+
+  rules:
+    - name: New incident
+      condition: event.sys_id is defined
+      actions:
+        - print_event:
+            pretty: true
+
