@@ -8,6 +8,7 @@
         interval: 5
         instance:
           api_key: "{{ SN_API_KEY }}"
+          host: "{{ SN_HOST }}"
 
   rules:
     - name: New incident
