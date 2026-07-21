@@ -4,8 +4,8 @@
   sources:
     - name: Watch for any updated table
       servicenow.itsm.records:
-        table: "{{ snow_table }}"
-        interval: "{{ snow_interval }}"
+        table: incident
+        interval: 5
         remote_servicenow_timezone: America/New_York
 
   rules:
