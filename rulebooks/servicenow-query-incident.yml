@@ -7,6 +7,9 @@
         table: incident
         interval: 5
         remote_servicenow_timezone: America/New_York
+      instance:
+        host: "{{ lookup('env','SN_HOST') }}"
+        api_key: "{{ lookup('env','SN_API_KEY') }}"
 
   rules:
     - name: New incident
