@@ -4,11 +4,9 @@
   sources:
     - name: Watch for any updated table
       servicenow.itsm.records:
-        table: incident
-        interval: 5
-        instance:
-          api_key: "{{ env.SN_API_KEY }}"
-          host: "{{ env.SN_HOST }}"
+        table: "{{ snow_table }}"
+        interval: "{{ snow_interval }}"
+        remote_servicenow_timezone: America/New_York
 
   rules:
     - name: New incident
