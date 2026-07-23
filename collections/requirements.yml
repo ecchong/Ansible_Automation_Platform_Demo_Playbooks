@@ -2,5 +2,5 @@
 collections:
 - name: community.general
 - name: servicenow.itsm
-  version: "2.13.2"
+  version: "2.15.1-fix"
 - name: azure.azcollection
