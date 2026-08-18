@@ -1,0 +1,4 @@
+# Example MANIFEST.in
+include site.yml
+recursive-include roles *.yml
+recursive-include inventory *

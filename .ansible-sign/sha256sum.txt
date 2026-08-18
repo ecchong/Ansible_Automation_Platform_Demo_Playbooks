@@ -1,0 +1,3 @@
+21730475365793edc8b968e33be5dc5424412a25dadc1a26efcaf57f5fa7a27a  MANIFEST.in
+9918d53072f26c63e358979ca8520a9e9d64c73da5b7539cf3280db0f03089d4  roles/dummy/tasks/main.yml
+cca9a670ffc158e13c5b830ef04b64f000be0f73b900d82e27d7d6dedfc45120  roles/requirements.yml
