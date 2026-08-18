@@ -2,7 +2,7 @@
 #include site.yml
 recursive-include roles *
 recursive-include inventories *
-recursive-include collections *
+#recursive-include collections *
 recursive-include playbooks *
 recursive-include rulebooks *
 
