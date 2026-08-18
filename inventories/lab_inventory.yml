@@ -1,5 +1,8 @@
 all:
   children:
+    rhel:
+      hosts:
+        aap-node1.lab.automate.nyc:
     aap_infra:
       vars:
         my_var: this is a group var

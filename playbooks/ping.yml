@@ -10,3 +10,9 @@
 
     - name: Task 2
       ping:
+
+    - name: Task 3
+      ansible.builtin.set_stats:
+        per_host: true
+        data:
+          foo: bar
