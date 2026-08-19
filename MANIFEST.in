@@ -1,10 +1,3 @@
-# Example MANIFEST.in
-#include site.yml
-recursive-include roles *
-recursive-include inventories *
-#recursive-include collections *
-recursive-include playbooks *
-recursive-include rulebooks *
-
-#global-include *
-#global-exclude *.git*
+# MANIFEST.in
+global-include *
+prune .git
