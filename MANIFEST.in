@@ -5,3 +5,6 @@ exclude .DS_Store
 exclude .vscode
 exclude *junk*
 exclude ansible-navigator.log
+prune collections/ansible_collections/servicenow
+exclude collections/ansible_collections/servicenow*
+prune .vscode
