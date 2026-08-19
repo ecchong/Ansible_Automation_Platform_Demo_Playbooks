@@ -1,3 +1,7 @@
 # MANIFEST.in
 global-include *
 prune .git
+exclude .DS_Store
+exclude .vscode
+exclude *junk*
+exclude ansible-navigator.log
