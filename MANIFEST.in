@@ -6,5 +6,8 @@ exclude .vscode
 exclude *junk*
 exclude ansible-navigator.log
 prune collections/ansible_collections/servicenow
-exclude collections/ansible_collections/servicenow.*
+prune collections/ansible_collections/servicenow**
 prune .vscode
+recursive-exclude roles junk**
+recursive-exclude rulebooks junk**
+recursive-exclude playbooks junk**
