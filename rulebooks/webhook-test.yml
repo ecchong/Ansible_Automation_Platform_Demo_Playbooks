@@ -1,0 +1,17 @@
+---
+- name: Test webhook events
+  hosts: all
+ 
+  sources:
+    - name: My webhook source
+      ansible.eda.webhook:
+        port: 12345
+ 
+  rules:
+    - name: Webhook event with a message
+      condition:
+        all:
+          - event.payload.message != ""
+      action:
+        print_event:
+          pretty: true
