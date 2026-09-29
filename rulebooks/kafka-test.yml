@@ -13,10 +13,14 @@
     - name: Trigger on hello
       condition: event.body.message == 'hello'
       throttle:
-        once_within: 5 minutes
+        once_within: 1 minutes
         group_by_attributes:
           - event.body.message
           - event.body.appname
       actions:
         - print_event:
             pretty: true
+        - debug:
+            msg:
+              - "{{ event.meta }}"
+              - "{{ event.body }}"
