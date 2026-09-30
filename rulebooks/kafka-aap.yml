@@ -25,3 +25,10 @@
         - run_job_template:
             organization: BAC
             name: "BAC/no-op"
+            set_facts: myvar
+
+    - name: Catch all
+      condition: facts.myvar is defined
+      action:
+        debug:
+          msg: "DEBUG: {{ facts.myvar }}" 
