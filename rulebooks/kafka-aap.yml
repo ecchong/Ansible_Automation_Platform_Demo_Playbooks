@@ -30,5 +30,4 @@
     - name: Catch all
       condition: fact.myvar is defined
       action:
-        debug:
-          msg: "DEBUG: {{ fact.myvar }}" 
+        print_event:
