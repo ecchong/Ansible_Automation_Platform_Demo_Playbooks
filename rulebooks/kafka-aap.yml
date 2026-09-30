@@ -25,3 +25,6 @@
         - run_job_template:
             organization: BAC
             name: "BAC/no-op"
+            job_args:
+              event_payload: "{{ event.payload }}"
+
