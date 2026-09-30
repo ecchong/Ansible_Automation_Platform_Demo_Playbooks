@@ -1,0 +1,27 @@
+---
+- name: Testing Kafka with AAP job
+  hosts: localhost
+
+  sources:
+    - name: Kafka
+      ansible.eda.kafka:
+        host: ryzen5.lab.automate.nyc
+        port: 9094
+        topic: syslog-queue
+
+  rules:
+    - name: Trigger on hello
+      condition: event.body.message == 'hello'
+      throttle:
+        once_within: 1 minutes
+        group_by_attributes:
+          - event.body.message
+          - event.body.appname
+      actions:
+        - debug:
+            msg:
+              - "{{ event.meta }}"
+              - "{{ event.body }}"
+        - run_job_template:
+            organization: BAC
+            name: "BAC/no-op"

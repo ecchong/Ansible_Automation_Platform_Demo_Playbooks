@@ -1,0 +1,8 @@
+---
+- name: No-op template for EDA testing
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Display EDA event
+      debug:
+        var: ansible_eda
