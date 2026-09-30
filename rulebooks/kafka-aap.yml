@@ -31,4 +31,4 @@
       condition: fact.status is defined and fact.status == "failed"
       action:
         debug:
-          msg: "FAILED status"
+          msg: "FAILED status: {{ fact.status }}"
