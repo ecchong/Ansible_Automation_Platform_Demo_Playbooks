@@ -27,7 +27,7 @@
             name: "BAC/no-op"
             set_facts: true
 
-    - name: Catch all
-      condition: fact.myvar is defined
+    - name: When job status is failed
+      conditions: fact.status is defined and fact.status == "failed"
       action:
         print_event:

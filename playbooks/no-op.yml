@@ -12,3 +12,4 @@
       set_stats:
         data:
           myvar: "{{ ansible_date_time.iso8601 }}"
+          status: "{{ ansible_eda.event.body.status | default('failed') }}"
