@@ -30,4 +30,5 @@
     - name: When job status is failed
       condition: fact.status is defined and fact.status == "failed"
       action:
-        print_event:
+        debug:
+          msg: "FAILED status"
