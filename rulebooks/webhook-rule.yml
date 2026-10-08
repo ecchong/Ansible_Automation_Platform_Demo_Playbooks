@@ -15,5 +15,8 @@
           - event.payload.message != ""
       action:
         run_job_template:
-            organization: BAC
-            name: "BAC/no-op"
+          organization: BAC
+          name: "BAC/no-op"
+          job_args:
+            extra_vars:
+              hello: world
