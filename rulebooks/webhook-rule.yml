@@ -15,7 +15,5 @@
           - event.payload.message != ""
       action:
         run_job_template:
-          name: "Ping"
-          organization: ABC
-          job_args:
-            event_payload: "{{ event.payload }}"
+            organization: BAC
+            name: "BAC/no-op"
