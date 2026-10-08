@@ -18,6 +18,8 @@
           organization: BAC
           name: "BAC/no-op"
           add_event_uuid_label: true
+          labels:
+            - dummy
           job_args:
             extra_vars:
               hello: world
