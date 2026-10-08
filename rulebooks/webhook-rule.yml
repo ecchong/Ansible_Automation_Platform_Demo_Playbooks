@@ -17,6 +17,7 @@
         run_job_template:
           organization: BAC
           name: "BAC/no-op"
+          add_event_uuid_label: true
           job_args:
             extra_vars:
               hello: world
