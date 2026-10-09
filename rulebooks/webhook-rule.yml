@@ -18,8 +18,16 @@
           organization: BAC
           name: "BAC/test eda launch"
           add_event_uuid_label: true
+          set_facts: true
           labels:
             - dummy
           job_args:
             extra_vars:
               hello: world
+
+    - name: When job status is failed
+      condition: fact.status is defined and fact.status == "failed"
+      action:
+        debug:
+          msg: "FAILED status: {{ fact.status }}"
+
