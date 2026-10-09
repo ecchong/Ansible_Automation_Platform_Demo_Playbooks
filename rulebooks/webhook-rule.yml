@@ -14,9 +14,9 @@
         all:
           - event.payload.message != ""
       action:
-        run_job_template:
+        run_workflow_template:
           organization: BAC
-          name: "BAC/no-op"
+          name: "BAC/test eda launch"
           add_event_uuid_label: true
           labels:
             - dummy
