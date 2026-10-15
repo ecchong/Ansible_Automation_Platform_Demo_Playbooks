@@ -1,17 +1,48 @@
 ---
-- name: Test webhook events
+- name: Testing TSO matcher rules
   hosts: all
  
   sources:
     - name: My webhook source
       ansible.eda.webhook:
         port: 12345
+      filters:
+        - eda.builtin.json_filter:
+            include_keys:
+              - 'identity'
  
   rules:
-    - name: Webhook event with a message
-      condition:
-        all:
-          - event.payload.message != ""
+    - name: APS003
+      condition: >
+        event.payload.watsonAlert.canonicalAlert.identity.agent != "esx"
+        and event.payload.watsonAlert.canonicalAlert.identity.rawSummary is not search("system:", ignorecase=true)
+        and event.payload.watsonAlert.canonicalAlert.identity.rawSummary is regex('(cpu utilization|cpu starvation detected)', ignorecase=true)
+        and event.payload.watsonAlert.canonicalAlert.identity.rawSummary is not regex('(iir calculation failed for arrangement|stuck|hung)', ignorecase=true)
+      action:
+        debug:
+          msg: "APS003"
+
+    - name: APS004
+      condition: >
+        event.payload.watsonAlert.canonicalAlert.identity.agent == "memory"
+        and event.payload.watsonAlert.canonicalAlert.identity.rawSummary is regex('(used|percentage|utililzation|less than|usage|available)')
+        and event.payload.watsonAlert.canonicalAlert.identity.rawSummary is not search("ms_win", ignorecase=true)
+        and event.payload.watsonAlert.canonicalAlert.identity.rawSummary is search("1532")
+      action:
+        debug:
+          msg: "APS004"
+
+    - name: APS005
+      condition: >
+        event.payload.watsonAlert.canonicalAlert.identity.rawSummary is regex('(stuck|hung)')
+        and event.payload.watsonAlert.canonicalAlert.identity.rawSummary is not regex('(glp-w-e144|iir calculation failed for arrangement|cpu utilization)')
+      action:
+        debug:
+          msg: "APS005"
+
+    - name: DEBUG - catch all
+      condition: >
+        idenity is defined
       action:
         print_event:
           pretty: true

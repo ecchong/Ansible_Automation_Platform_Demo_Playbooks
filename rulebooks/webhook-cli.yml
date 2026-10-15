@@ -7,17 +7,29 @@
       ansible.eda.webhook:
         host: 0.0.0.0
         port: 12345
-    - name: My range
-      ansible.eda.range:
-        limit: 5
- 
+
   rules:
-    - name: Hello message
+    - name: Display
       condition:
         all:
-          - event.payload.message == "hello" or event.payload.message == "Hello"
-      action:
-        debug:
+          - event.payload.alertGroup == 'Disk'
+          - facts.counter == 5
+      
+      actions:
+        - debug:
+            msg: "more than 5"
+        - set_fact:
+            fact:
+              counter: 0
+
+    - name: Count
+      condition: event.payload.alertGroup == 'Count'
+      actions:
+        - set_fact:
+            fact:
+              counter: 5
+        - debug:
+            msg: "{{ (vars.get('facts', {}).get('counter', 0) | int)  }}"
 
     - name: Bye message
       condition:

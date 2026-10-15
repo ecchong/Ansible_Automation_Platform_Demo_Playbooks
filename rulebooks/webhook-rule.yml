@@ -13,17 +13,21 @@
       condition:
         all:
           - event.payload.message != ""
-      action:
-        run_workflow_template:
-          organization: BAC
-          name: "BAC/test eda launch"
-          add_event_uuid_label: true
-          set_facts: true
-          labels:
-            - dummy
-          job_args:
-            extra_vars:
-              hello: world
+      actions:
+        - run_module:
+            debug:
+              msg: "{{ event | to_json }}"
+            
+        - run_workflow_template:
+            organization: BAC
+            name: "BAC/test eda launch"
+            add_event_uuid_label: true
+            set_facts: true
+            labels:
+              - dummy
+            job_args:
+              extra_vars:
+                hello: world
 
     - name: When job status is failed
       condition: fact.status is defined and fact.status == "failed"

@@ -1,0 +1,16 @@
+---
+- name: Listen for events on a webhook
+  hosts: web
+  ## Define our source for events
+  sources:
+     - ansible.eda.url_check:
+        urls:
+          - "{{ url_to_check }}"
+        delay: 15
+
+  rules:
+    - name: Web site is up
+      condition: event.url_check.status == "up"
+      action:
+        print_event:
+          pretty: true
