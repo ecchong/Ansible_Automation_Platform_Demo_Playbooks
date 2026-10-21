@@ -14,10 +14,6 @@
         all:
           - event.payload.message != ""
       actions:
-        - run_module:
-            debug:
-              msg: "{{ event | to_json }}"
-
         - run_workflow_template:
             organization: "{{ vars.org_name | default('Default') }}"
             name: "ping"
