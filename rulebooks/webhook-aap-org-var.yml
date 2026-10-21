@@ -22,7 +22,8 @@
             labels:
               - my_test
             job_args:
-              ansible_event_str: "{{ event | tojson }}"
+              extra_vars:
+                ansible_event_str: "{{ event | tojson }}"
 
     - name: When job status is failed
       condition: fact.status is defined and fact.status == "failed"
