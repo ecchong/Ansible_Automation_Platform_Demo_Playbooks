@@ -1,0 +1,37 @@
+---
+- name: Testing set_fact
+  hosts: all
+ 
+  sources:
+    - name: My webhook source
+      ansible.eda.webhook:
+        host: 0.0.0.0
+        port: 12345
+ 
+  rules:
+    - name: Webhook event with a message
+      condition:
+        all:
+          - event.payload.message != ""
+      actions:
+        - run_module:
+            debug:
+              msg: "{{ event | to_json }}"
+
+        - run_workflow_template:
+            organization: BAC
+            name: "BAC/test eda launch"
+            add_event_uuid_label: true
+            set_facts: true
+            labels:
+              - dummy
+            job_args:
+              extra_vars:
+                hello: world
+
+    - name: When job status is failed
+      condition: fact.status is defined and fact.status == "failed"
+      action:
+        debug:
+          msg: "FAILED status: {{ fact.status }}"
+
