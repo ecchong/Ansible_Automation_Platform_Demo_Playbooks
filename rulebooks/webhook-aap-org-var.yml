@@ -15,7 +15,7 @@
           - event.payload.message != ""
       actions:
         - run_workflow_template:
-            organization: "{{ vars.org_name | default('Default') }}"
+            organization: "{{ org_name | default('Default') }}"
             name: "ping"
             add_event_uuid_label: true
             labels:
