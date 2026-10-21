@@ -1,0 +1,19 @@
+---
+- name: Testing var
+  hosts: all
+ 
+  sources:
+    - name: My webhook source
+      ansible.eda.webhook:
+        host: 0.0.0.0
+        port: 12345
+ 
+  rules:
+    - name: Webhook event with a message
+      condition:
+        all:
+          - event.payload.message != ""
+      action:
+        debug:
+          msg: "QQQ{{ event | tojson }}QQQ"
+

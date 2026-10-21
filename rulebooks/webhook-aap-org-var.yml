@@ -16,13 +16,15 @@
       actions:
         - run_workflow_template:
             organization: "{{ org_name | default('Default') }}"
-            name: "ping"
+            name: "{{ job_name | default('no-op') }}"
             add_event_uuid_label: true
+            include_events: false
             labels:
-              - dummy
+              - my_test
             job_args:
               extra_vars:
                 hello: world
+                ansible_event: "{{ event | tojson }}"
 
     - name: When job status is failed
       condition: fact.status is defined and fact.status == "failed"
